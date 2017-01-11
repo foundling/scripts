@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+''' Batch conversion of 24bit 44100 WAV files to 16bit 44100 WAV files using sox. '''  
+
+import sys
+import os
+from subprocess import call
+
+def usage():
+
+    ''' usage: to16bit SRC_DIR DEST_DIR [-r]'''
+
+    print usage.__doc__
+
+def get_args(args):
+
+    if len(args) < 3:
+        usage()
+        sys.exit(1)
+    
+    return args[1:4]
+
+def convert(file_list):
+
+    commands = [ 
+
+        'sox {} -b 16 -r 44.1k {}'.format(infile, outfile).split() 
+        for infile
+        in file_list
+
+    ]
+
+    for command in commands:
+        call(command)
+
+def main():
+
+    args = get_args(sys.argv)
+
+
+if __name__ == '__main__':
+    main()
